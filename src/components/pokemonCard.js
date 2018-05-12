@@ -17,7 +17,7 @@ const PokemonCard = (props) => {
                 <div className="content">
                     <a className="header" >{pokemon['Identifier']}</a>
                     <div className="meta Test">
-                        <a>Last Seen 2 days ago</a>
+                        <a>pokemon details</a>
                     </div>
                 </div>
             </div>
