@@ -1,0 +1,16 @@
+.Page {
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    background-image: url("./assets/Pokeball.PNG");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;  
+}
+
+.SearchContainer {
+    margin-bottom: 5vh;
+}
+
+.pokemon-properties {
+    width: "80vw";
+}
