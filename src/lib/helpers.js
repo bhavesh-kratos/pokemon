@@ -27,4 +27,16 @@ export const calcTotalPower = (objArray) => {
     return { max: addPokeSkills(maxObj), min: addPokeSkills(minObj) };
 }
 
-export const addPokeSkills = (obj) => parseInt(obj['BaseStamina']) + parseInt(obj['BaseDefense']) + parseInt(obj['BaseAttack']);  
+export const addPokeSkills = (obj) => parseInt(obj['BaseStamina']) + parseInt(obj['BaseDefense']) + parseInt(obj['BaseAttack']);
+
+export const winnerFormula = (me, opponent) => {
+    const meTotal = addPokeSkills(me);
+    const opponentTotal = addPokeSkills(opponent);
+    if (meTotal > opponentTotal) {
+        return me['PkMn'];
+    }
+    else if (meTotal < opponentTotal) {
+        return opponent['PkMn'];
+    }
+    return null;
+};

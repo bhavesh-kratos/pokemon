@@ -95,7 +95,7 @@ class Home extends Component {
                         </Grid.Row>
                         <Grid.Row columns={3}>
                             <Grid.Column textAlign="center" stretched>
-                                <PokemonCard pokemon={this.state.me} handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} />
+                                <PokemonCard pokemon={this.state.me} handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} ribbonPosn="right"/>
                             </Grid.Column>
                             <Grid.Column verticalAlign="top">
                                 <div className="ui vertical animated button red big" tabIndex="0" style={{ fontFamily: 'Pokemon' }}
@@ -107,7 +107,7 @@ class Home extends Component {
                                 </div>
                             </Grid.Column>
                             <Grid.Column>
-                                <PokemonCard pokemon={this.state.opponent} handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} />
+                                <PokemonCard pokemon={this.state.opponent} handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} ribbonPosn=""/>
                             </Grid.Column>
                         </Grid.Row>
                         {/* <button onClick={() => this.handleDimmerOpen(1)}> aa</button> */}
