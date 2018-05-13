@@ -9,7 +9,6 @@ export default class PokemonProperties extends Component {
     pokemonType = pokeType => (pokeType != "NONE") ? pokeType : null;
 
     pokeEvolution = evolStage => {
-
         switch (parseInt(evolStage)) {
             case 1: return 'Unevolved'; break;
             case 2: return 'Evolved Stage 1'; break;
@@ -23,12 +22,12 @@ export default class PokemonProperties extends Component {
         {
             menuItem: 'Skills', render: () => {
                 return (
-                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        Attack:&nbsp;&nbsp; <Rating maxRating={5} defaultRating={calcRating(this.props.pokemon['selected'].BaseAttack, this.props.attackRange.max, this.props.attackRange.min)} icon='star' size='massive' disabled />
+                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        Attack:&nbsp;&nbsp; <Rating maxRating={5} rating={calcRating(this.props.pokemon['selected'].BaseAttack, this.props.attackRange.max, this.props.attackRange.min)} icon='star' size='massive' disabled />
                         &nbsp;&nbsp;
-                        Defense:&nbsp;&nbsp; <Rating maxRating={5} defaultRating={calcRating(this.props.pokemon['selected'].BaseDefense, this.props.defenseRange.max, this.props.defenseRange.min)} icon='star' size='massive' disabled />
+                        Defense:&nbsp;&nbsp; <Rating maxRating={5} rating={calcRating(this.props.pokemon['selected'].BaseDefense, this.props.defenseRange.max, this.props.defenseRange.min)} icon='star' size='massive' disabled />
                         &nbsp;&nbsp;
-                        Stamina:&nbsp;&nbsp; <Rating maxRating={5} defaultRating={calcRating(this.props.pokemon['selected'].BaseStamina, this.props.staminaRange.max, this.props.staminaRange.min)} icon='star' size='massive' disabled />
+                        Stamina:&nbsp;&nbsp; <Rating maxRating={5} rating={calcRating(this.props.pokemon['selected'].BaseStamina, this.props.staminaRange.max, this.props.staminaRange.min)} icon='star' size='massive' disabled />
                         &nbsp;&nbsp;
                     </Tab.Pane>
                 );
@@ -37,7 +36,7 @@ export default class PokemonProperties extends Component {
         {
             menuItem: 'Moves', render: () => {
                 return (
-                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Pokemon' }}>
                         Movement type: {this.pokemonType(this.props.pokemon['selected'].MovementType)} <br /><br />
                         QuickMoves: {this.pokemonType(this.props.pokemon['selected'].QuickMoves)} <br /><br />
                         CinematicMoves: {this.pokemonType(this.props.pokemon['selected'].CinematicMoves)} <br />
@@ -48,7 +47,7 @@ export default class PokemonProperties extends Component {
         {
             menuItem: 'Pokemon Type', render: () => {
                 return (
-                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Pokemon' }}>
                         {this.pokemonType(this.props.pokemon['selected'].Type1)} <br /><br />
                         {this.pokemonType(this.props.pokemon['selected'].Type2)} <br /><br />
                     </Tab.Pane>
@@ -68,12 +67,12 @@ export default class PokemonProperties extends Component {
                         active={active}
                         onClickOutside={handleDimmerClose}
                         page
-                        className= "Blur"
+                        className="Blur"
                     >
                         {/* {pokemon.Identifier}
                         <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.PkMn}.png`} width={200} height={200} /> */}
                         <Grid divided='vertically' padded className="Content">
-                            <Grid.Row columns={3} centered>
+                            <Grid.Row columns={3} centered style={{ fontFamily: "Pokemon" }}>
                                 <Grid.Column textAlign="center">
                                     {!_.isNil(previous) && (
                                         <Fragment>
@@ -81,18 +80,18 @@ export default class PokemonProperties extends Component {
                                                 display: "block",
                                                 margin: "auto auto",
                                             }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${previous.PkMn}.png`} width="150" height="150" />
-                                            {previous.Identifier}<br />{this.pokeEvolution(previous.EvoStage)}
+                                            {previous.Identifier}<br />({this.pokeEvolution(previous.EvoStage)})
                                         </Fragment>
                                     )
                                     }
                                 </Grid.Column>
                                 <Grid.Column textAlign="center" verticalAlign="top">
-                                    {selected.Identifier}
                                     <Image style={{
                                         display: "block",
                                         margin: "auto auto",
                                     }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selected.PkMn}.png`} width="200" height="200" />
-                                    {this.pokeEvolution(selected.EvoStage)}
+                                    {selected.Identifier}<br />
+                                    ({this.pokeEvolution(selected.EvoStage)})
                                 </Grid.Column>
                                 <Grid.Column textAlign="center">
                                     {!_.isNil(next) && (
@@ -101,7 +100,7 @@ export default class PokemonProperties extends Component {
                                                 display: "block",
                                                 margin: "auto auto",
                                             }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${next.PkMn}.png`} width="150" height="150" />
-                                            {next.Identifier}<br />{this.pokeEvolution(next.EvoStage)}
+                                            {next.Identifier}<br />({this.pokeEvolution(next.EvoStage)})
                                         </Fragment>
                                     )
                                     }

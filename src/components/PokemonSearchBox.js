@@ -2,21 +2,6 @@ import React, { Component, Fragment } from 'react'
 import _ from 'lodash';
 import { Search, Image } from 'semantic-ui-react'
 
-const PokemonSearchCard = (props) => {
-    const { PkMn, Identifier } = props;
-    console.log('searchbox', props);
-    return (
-        <div>
-            <Image className="ui" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${PkMn}.png`} avatar />
-            <div>{Identifier}</div>
-            <div class="ui buttons">
-                <button class="ui positive button" onClick={() => console.log('yoooooo')}>Me</button>
-                <div class="or"></div>
-                <button class="ui red button" onClick={() => console.log('yoooooo')}>Opponent</button>
-            </div>
-        </div>
-    );
-}
 
 
 class PokemonSearchBox extends Component {
@@ -26,9 +11,9 @@ class PokemonSearchBox extends Component {
 
     resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-    handleResultSelect = (e, { result }) => {
-        this.setState({ value: result.Identifier });
-        this.props.handleDimmerOpen(result.PkMn);
+    handleResultSelect = ( Identifier, PkMn ) => {
+        this.setState({ value: Identifier });
+        this.props.handleDimmerOpen(PkMn);
     }
 
     handleSearchChange = (e, { value }) => {
@@ -48,16 +33,32 @@ class PokemonSearchBox extends Component {
         }, 300)
     }
 
+    PokemonSearchCard = (props) => {
+        const { PkMn, Identifier } = props;
+        console.log('searchbox', props);
+        return (
+            <div>
+                <Image className="ui" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${PkMn}.png`} />
+                <div style={{fontWeight: 'bold', fontFamily: "Pokemon" }} >{Identifier}</div>
+                <div class="ui buttons">
+                    <button class="ui white button" onClick={() => this.props.setPlayer(PkMn,'me')}>Me</button>
+                    <div class="or" data-text="GO" onClick={() => this.handleResultSelect(Identifier, PkMn)}></div>
+                    <button class="ui red button" onClick={() => this.props.setPlayer(PkMn,'opponent')}>Opponent</button>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         const { isLoading, value, results } = this.state;
         return (
             <span>
                 <Search
                     loading={isLoading}
-                    onResultSelect={this.handleResultSelect}
+                    // onResultSelect={this.handleResultSelect}
                     onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
                     results={_.slice(results, 0, 4)}
-                    resultRenderer={PokemonSearchCard}
+                    resultRenderer={this.PokemonSearchCard}
                     minCharacters={2}
                     value={value}
                     size={"large"}

@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export const maxValue = (objArray, propName) => {
     const max = _.maxBy(objArray, function (o) { return parseInt(o[propName]); });
-    console.log('max',max)
+    console.log('max', max);
     return max[propName];
 }
 
@@ -14,9 +14,17 @@ export const minValue = (objArray, propName) => {
 // rating in range 1-5
 export const calcRating = (value, maxOld, minOld) => {
     let oldRange = (maxOld - minOld);
-    return _.round((((value - minOld) * 4) / oldRange) + 1) ;
+    return _.round((((value - minOld) * 4) / oldRange) + 1);
 }
 
-export const randomNum = (min,max) => _.random(min, max);
+export const randomNum = (min, max) => _.random(min, max);
 
+export const sumBy = (objArray, propName) => _.sumBy(objArray, function (o) { return parseInt(o[propName]); });
 
+export const calcTotalPower = (objArray) => {
+    const maxObj = _.maxBy(objArray, addPokeSkills);
+    const minObj = _.minBy(objArray, addPokeSkills);
+    return { max: addPokeSkills(maxObj), min: addPokeSkills(minObj) };
+}
+
+export const addPokeSkills = (obj) => parseInt(obj['BaseStamina']) + parseInt(obj['BaseDefense']) + parseInt(obj['BaseAttack']);  
