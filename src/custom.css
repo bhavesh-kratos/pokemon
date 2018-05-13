@@ -14,3 +14,12 @@
 .pokemon-properties {
     width: "80vw";
 }
+
+.Close-Button {
+    position: fixed;
+    top: 5px;
+    right: 2px;
+    opacity: 0.4;
+    cursor: pointer;
+    z-index: 1500;
+}

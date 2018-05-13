@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
-import { Button, Dimmer, Header, Icon, Reveal, Segment, Grid, Image, Tab, Rating } from 'semantic-ui-react';
+import { Dimmer, Icon, Segment, Grid, Image, Tab, Rating, Transition } from 'semantic-ui-react';
 import { calcRating } from '../lib/helpers';
-import '../custom.css';
 
 export default class PokemonProperties extends Component {
 
@@ -22,7 +21,7 @@ export default class PokemonProperties extends Component {
         {
             menuItem: 'Skills', render: () => {
                 return (
-                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <Tab.Pane style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         Attack:&nbsp;&nbsp; <Rating maxRating={5} rating={calcRating(this.props.pokemon['selected'].BaseAttack, this.props.attackRange.max, this.props.attackRange.min)} icon='star' size='massive' disabled />
                         &nbsp;&nbsp;
                         Defense:&nbsp;&nbsp; <Rating maxRating={5} rating={calcRating(this.props.pokemon['selected'].BaseDefense, this.props.defenseRange.max, this.props.defenseRange.min)} icon='star' size='massive' disabled />
@@ -63,58 +62,63 @@ export default class PokemonProperties extends Component {
             let { previous, next, selected } = pokemon;
             return (
                 <div>
-                    <Dimmer
-                        active={active}
-                        onClickOutside={handleDimmerClose}
-                        page
-                        className="Blur"
-                    >
-                        {/* {pokemon.Identifier}
+                    <Transition animation="fade up" duration={300} visible={active}>
+                        <Dimmer
+                            active={active}
+                            page
+                            className="Blur"
+                        >
+                            <button className="circular ui icon button huge Close-Button" onClick={() => handleDimmerClose()}>
+                                <i className="icon close"></i>
+                            </button>
+                            {/* {pokemon.Identifier}
                         <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.PkMn}.png`} width={200} height={200} /> */}
-                        <Grid divided='vertically' padded className="Content">
-                            <Grid.Row columns={3} centered style={{ fontFamily: "Pokemon" }}>
-                                <Grid.Column textAlign="center">
-                                    {!_.isNil(previous) && (
-                                        <Fragment>
-                                            <Image style={{
-                                                display: "block",
-                                                margin: "auto auto",
-                                            }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${previous.PkMn}.png`} width="150" height="150" />
-                                            {previous.Identifier}<br />({this.pokeEvolution(previous.EvoStage)})
+                            <Grid divided='vertically' padded className="Content">
+
+                                <Grid.Row columns={3} centered style={{ fontFamily: "Pokemon" }}>
+                                    <Grid.Column textAlign="center">
+                                        {!_.isNil(previous) && (
+                                            <Fragment>
+                                                <Image style={{
+                                                    display: "block",
+                                                    margin: "auto auto",
+                                                }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${previous.PkMn}.png`} width="150" height="150" />
+                                                {previous.Identifier}<br />({this.pokeEvolution(previous.EvoStage)})
                                         </Fragment>
-                                    )
-                                    }
+                                        )
+                                        }
+                                    </Grid.Column>
+                                    <Grid.Column textAlign="center" verticalAlign="top">
+                                        <Image style={{
+                                            display: "block",
+                                            margin: "auto auto",
+                                        }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selected.PkMn}.png`} width="200" height="200" />
+                                        {selected.Identifier}<br />
+                                        ({this.pokeEvolution(selected.EvoStage)})
                                 </Grid.Column>
-                                <Grid.Column textAlign="center" verticalAlign="top">
-                                    <Image style={{
-                                        display: "block",
-                                        margin: "auto auto",
-                                    }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selected.PkMn}.png`} width="200" height="200" />
-                                    {selected.Identifier}<br />
-                                    ({this.pokeEvolution(selected.EvoStage)})
-                                </Grid.Column>
-                                <Grid.Column textAlign="center">
-                                    {!_.isNil(next) && (
-                                        <Fragment>
-                                            <Image style={{
-                                                display: "block",
-                                                margin: "auto auto",
-                                            }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${next.PkMn}.png`} width="150" height="150" />
-                                            {next.Identifier}<br />({this.pokeEvolution(next.EvoStage)})
+                                    <Grid.Column textAlign="center">
+                                        {!_.isNil(next) && (
+                                            <Fragment>
+                                                <Image style={{
+                                                    display: "block",
+                                                    margin: "auto auto",
+                                                }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${next.PkMn}.png`} width="150" height="150" />
+                                                {next.Identifier}<br />({this.pokeEvolution(next.EvoStage)})
                                         </Fragment>
-                                    )
-                                    }
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row centered>
-                                <Grid.Column width={12}>
-                                    <Segment >
-                                        <Tab panes={this.panes} defaultActiveIndex={0} style={{ color: 'gray' }} />
-                                    </Segment>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-                    </Dimmer>
+                                        )
+                                        }
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row centered>
+                                    <Grid.Column width={12}>
+                                        <Segment >
+                                            <Tab panes={this.panes} defaultActiveIndex={0} style={{ color: 'gray' }} />
+                                        </Segment>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                        </Dimmer>
+                    </Transition>
                 </div>
             )
         }

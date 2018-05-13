@@ -19,7 +19,7 @@ const PokemonCard = (props) => {
                     <div className="meta Test">
                         <Rating maxRating={5} rating={calcRating(addPokeSkills(pokemon), totalRange.max, totalRange.min)} icon='star' size='huge' disabled /><br />
                         <button className="circular ui icon button">
-                            <i className="icon smile outline"></i>
+                            <i className="icon close"></i>
                         </button>
                         <button className="circular ui icon button" onClick={() => handleDimmerOpen(pokemon['PkMn'])}>
                             <i className="icon calculator"></i>
