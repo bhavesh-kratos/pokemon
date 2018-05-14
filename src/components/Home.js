@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import '../custom.css';
 import { Grid } from 'semantic-ui-react';
-import { maxValue, minValue, randomNum, sumBy, calcTotalPower } from '../lib/helpers';
+import { maxValue, minValue, randomNum, calcTotalPower } from '../lib/helpers';
 //import PokemonsList from "./pokemonsList"; couldn't build this feature, so ignore its implementation
 import SearchBox from "./PokemonSearchBox";
 import PokemonCard from "./PokemonCard";
@@ -37,34 +37,38 @@ class Home extends Component {
     handleDimmerOpen = pokeId => {
         this.setState({ activeDimmer: true, pokemonToView: pokeId });
         const pokemonDetails = this.pokemonDetails(pokeId);
-        const pokemonFamilyDetails = this.pokemonFamilyDetails(pokeId, pokemonDetails['EvoChainID'], parseInt(pokemonDetails['EvoStage']));
+        const pokemonFamilyDetails = this.pokemonFamilyDetails(pokeId, pokemonDetails['EvoChainID'], parseInt(pokemonDetails['EvoStage'], 10));
         this.setState({ pokemonToViewDetails: pokemonFamilyDetails }); // setting all related details of pokemon
     }
     handleDimmerClose = () => this.setState({ activeDimmer: false })
 
     pokemonDetails = (pokeId) => {
-        return this.props.pokemonsData.find(pokemon => pokeId === pokemon.PkMn)
+        return this.props.pokemonsData.find(pokemon => pokeId == pokemon.PkMn)
     }
 
     setPlayer = (pokemonId, player) => {
+        
         const pokemon = this.pokemonDetails(pokemonId);
         this.setState({ [player]: pokemon })
+    }
+
+    generatePlayer = (pokemonId, player) => {
+        const r = randomNum(1, 151);
+        this.setPlayer(r, player);
     }
     // pokemonFamilyDetails = (pokeId, pokeFamilyId, pokeEvoStage) => {
     //     return this.props.pokemonsData.filter(pokemon => pokemon['EvoChainID'] === pokeFamilyId)
     // }
     pokemonFamilyDetails = (pokeId, pokeFamilyId, pokeEvoStage) => {
         return this.props.pokemonsData.reduce(function (acc, obj) {
-            console.log('asdsa', pokeEvoStage - 1);
-            if (obj['PkMn'] == pokeId) {
+
+            if (obj['PkMn'] === pokeId) {
                 return { 'selected': obj, ...acc };
             }
-            if (obj['EvoChainID'] == pokeFamilyId && obj['EvoStage'] == pokeEvoStage - 1) {
-                console.log('tolddyaa2')
+            if (obj['EvoChainID'] === pokeFamilyId && parseInt(obj['EvoStage'], 10) === parseInt(pokeEvoStage, 10) - 1) {
                 return { 'previous': obj, ...acc };
             }
-            if (obj['EvoChainID'] == pokeFamilyId && obj['EvoStage'] == pokeEvoStage + 1) {
-                console.log('tolddyaa')
+            if (obj['EvoChainID'] === pokeFamilyId && parseInt(obj['EvoStage'], 10) === parseInt(pokeEvoStage, 10) + 1) {
                 return { 'next': obj, ...acc };
             }
             return acc;
@@ -95,7 +99,7 @@ class Home extends Component {
                         </Grid.Row>
                         <Grid.Row columns={3}>
                             <Grid.Column textAlign="center" stretched>
-                                <PokemonCard pokemon={this.state.me} handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} ribbonPosn="right"/>
+                                <PokemonCard pokemon={this.state.me} generatePlayer={this.generatePlayer} playerType="me" handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} ribbonPosn="right" />
                             </Grid.Column>
                             <Grid.Column verticalAlign="top">
                                 <div className="ui vertical animated button red big" tabIndex="0" style={{ fontFamily: 'Pokemon' }}
@@ -107,15 +111,15 @@ class Home extends Component {
                                 </div>
                             </Grid.Column>
                             <Grid.Column>
-                                <PokemonCard pokemon={this.state.opponent} handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} ribbonPosn=""/>
+                                <PokemonCard pokemon={this.state.opponent} generatePlayer={this.generatePlayer} playerType="opponent" handleDimmerOpen={this.handleDimmerOpen} totalRange={this.state.totalRange} ribbonPosn="" />
                             </Grid.Column>
                         </Grid.Row>
                         {/* <button onClick={() => this.handleDimmerOpen(1)}> aa</button> */}
-                        <PokemonProperties pokemon={this.state.pokemonToViewDetails} handleDimmerClose={this.handleDimmerClose} active={this.state.activeDimmer} attackRange={this.state.attackRange} defenseRange={this.state.defenseRange} staminaRange={this.state.staminaRange} />
+                        <PokemonProperties pokemon={this.state.pokemonToViewDetails} handleDimmerOpen={this.handleDimmerOpen} handleDimmerClose={this.handleDimmerClose} active={this.state.activeDimmer} attackRange={this.state.attackRange} defenseRange={this.state.defenseRange} staminaRange={this.state.staminaRange} />
                     </Grid>)}
-                    {
-                        fighting && <PokemonFight me={this.state.me} opponent={this.state.opponent}/>
-                    }
+                {
+                    fighting && <PokemonFight me={this.state.me} opponent={this.state.opponent} />
+                }
             </Fragment>
         )
     }

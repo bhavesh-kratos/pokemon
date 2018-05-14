@@ -1,13 +1,13 @@
 import _ from 'lodash';
 
 export const maxValue = (objArray, propName) => {
-    const max = _.maxBy(objArray, function (o) { return parseInt(o[propName]); });
+    const max = _.maxBy(objArray, function (o) { return parseInt(o[propName], 10); });
     console.log('max', max);
     return max[propName];
 }
 
 export const minValue = (objArray, propName) => {
-    const min = _.minBy(objArray, function (o) { return parseInt(o[propName]); });
+    const min = _.minBy(objArray, function (o) { return parseInt(o[propName], 10); });
     return min[propName];
 }
 
@@ -19,7 +19,7 @@ export const calcRating = (value, maxOld, minOld) => {
 
 export const randomNum = (min, max) => _.random(min, max);
 
-export const sumBy = (objArray, propName) => _.sumBy(objArray, function (o) { return parseInt(o[propName]); });
+export const sumBy = (objArray, propName) => _.sumBy(objArray, function (o) { return parseInt(o[propName], 10); });
 
 export const calcTotalPower = (objArray) => {
     const maxObj = _.maxBy(objArray, addPokeSkills);
@@ -27,7 +27,7 @@ export const calcTotalPower = (objArray) => {
     return { max: addPokeSkills(maxObj), min: addPokeSkills(minObj) };
 }
 
-export const addPokeSkills = (obj) => parseInt(obj['BaseStamina']) + parseInt(obj['BaseDefense']) + parseInt(obj['BaseAttack']);
+export const addPokeSkills = (obj) => parseInt(obj['BaseStamina'], 10) + parseInt(obj['BaseDefense'], 10) + parseInt(obj['BaseAttack'], 10);
 
 export const winnerFormula = (me, opponent) => {
     const meTotal = addPokeSkills(me);

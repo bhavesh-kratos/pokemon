@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import _ from 'lodash';
 import { Search, Image } from 'semantic-ui-react'
 
@@ -38,7 +38,7 @@ class PokemonSearchBox extends Component {
         console.log('searchbox', props);
         return (
             <div>
-                <Image className="ui" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${PkMn}.png`} />
+                <Image className="left floated avatar" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${PkMn}.png`} />
                 <div style={{fontWeight: 'bold', fontFamily: "Pokemon" }} >{Identifier}</div>
                 <div class="ui buttons">
                     <button class="ui white button" onClick={() => this.props.setPlayer(PkMn,'me')}>Me</button>

@@ -1,17 +1,17 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
-import { Dimmer, Icon, Segment, Grid, Image, Tab, Rating, Transition } from 'semantic-ui-react';
+import { Dimmer, Segment, Grid, Image, Tab, Rating, Transition } from 'semantic-ui-react';
 import { calcRating } from '../lib/helpers';
 
 export default class PokemonProperties extends Component {
 
-    pokemonType = pokeType => (pokeType != "NONE") ? pokeType : null;
+    pokemonType = pokeType => (pokeType !== "NONE") ? pokeType : null;
 
     pokeEvolution = evolStage => {
-        switch (parseInt(evolStage)) {
-            case 1: return 'Unevolved'; break;
-            case 2: return 'Evolved Stage 1'; break;
-            case 3: return 'Evolved Stage 2'; break;
+        switch (parseInt(evolStage, 10)) {
+            case 1: return 'Unevolved'; 
+            case 2: return 'Evolved Stage 1'; 
+            case 3: return 'Evolved Stage 2'; 
             default:
                 return 'Can\'t tell!'
         }
@@ -56,7 +56,7 @@ export default class PokemonProperties extends Component {
     ]
 
     render() {
-        let { pokemon, active, handleDimmerClose, attackRange, defenseRange, staminaRange } = this.props;
+        let { pokemon, active, handleDimmerClose, handleDimmerOpen } = this.props;
 
         if (pokemon != null) {
             let { previous, next, selected } = pokemon;
@@ -78,13 +78,13 @@ export default class PokemonProperties extends Component {
                                 <Grid.Row columns={3} centered style={{ fontFamily: "Pokemon" }}>
                                     <Grid.Column textAlign="center">
                                         {!_.isNil(previous) && (
-                                            <Fragment>
+                                            <div onClick={() => handleDimmerOpen(previous['PkMn'])}>
                                                 <Image style={{
                                                     display: "block",
                                                     margin: "auto auto",
                                                 }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${previous.PkMn}.png`} width="150" height="150" />
                                                 {previous.Identifier}<br />({this.pokeEvolution(previous.EvoStage)})
-                                        </Fragment>
+                                        </div>
                                         )
                                         }
                                     </Grid.Column>
@@ -98,13 +98,13 @@ export default class PokemonProperties extends Component {
                                 </Grid.Column>
                                     <Grid.Column textAlign="center">
                                         {!_.isNil(next) && (
-                                            <Fragment>
+                                            <div onClick={() => handleDimmerOpen(next['PkMn'])}>
                                                 <Image style={{
                                                     display: "block",
                                                     margin: "auto auto",
                                                 }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${next.PkMn}.png`} width="150" height="150" />
                                                 {next.Identifier}<br />({this.pokeEvolution(next.EvoStage)})
-                                        </Fragment>
+                                        </div>
                                         )
                                         }
                                     </Grid.Column>

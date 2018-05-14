@@ -23,3 +23,25 @@
     cursor: pointer;
     z-index: 1500;
 }
+
+.swipe-left {
+    animation: swipe-left 1s forwards;
+}
+
+.swipe-right {
+    animation: swipe-right 1s forwards;
+}
+
+@keyframes swipe-left {
+    to {
+        transform: rotate(-13deg) translate3d(-100%, 0, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes swipe-right {
+    to {
+        transform: rotate(13deg) translate3d(100%, 0, 0);
+        opacity: 0;
+    }
+}
