@@ -47,7 +47,6 @@ class Home extends Component {
     }
 
     setPlayer = (pokemonId, player) => {
-        
         const pokemon = this.pokemonDetails(pokemonId);
         this.setState({ [player]: pokemon })
     }

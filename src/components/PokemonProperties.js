@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import _ from 'lodash';
 import { Dimmer, Segment, Grid, Image, Tab, Rating, Transition } from 'semantic-ui-react';
 import { calcRating } from '../lib/helpers';
@@ -9,9 +9,9 @@ export default class PokemonProperties extends Component {
 
     pokeEvolution = evolStage => {
         switch (parseInt(evolStage, 10)) {
-            case 1: return 'Unevolved'; 
-            case 2: return 'Evolved Stage 1'; 
-            case 3: return 'Evolved Stage 2'; 
+            case 1: return 'Unevolved';
+            case 2: return 'Evolved Stage 1';
+            case 3: return 'Evolved Stage 2';
             default:
                 return 'Can\'t tell!'
         }
@@ -53,7 +53,20 @@ export default class PokemonProperties extends Component {
                 );
             }
         },
-    ]
+    ];
+
+    pokemonImage = (pokemonStage, size) => {
+        return (
+            <Fragment>
+                <Image style={{
+                    display: "block",
+                    margin: "auto auto",
+                    cursor: "pointer"
+                }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonStage.PkMn}.png`} width={size} height={size} />
+                {pokemonStage.Identifier}<br />
+            </Fragment>
+        )
+    }
 
     render() {
         let { pokemon, active, handleDimmerClose, handleDimmerOpen } = this.props;
@@ -82,26 +95,29 @@ export default class PokemonProperties extends Component {
                                                 <Image style={{
                                                     display: "block",
                                                     margin: "auto auto",
+                                                    cursor: "pointer"
                                                 }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${previous.PkMn}.png`} width="150" height="150" />
                                                 {previous.Identifier}<br />({this.pokeEvolution(previous.EvoStage)})
                                         </div>
                                         )
                                         }
                                     </Grid.Column>
-                                    <Grid.Column textAlign="center" verticalAlign="top">
+                                    <Grid.Column textAlign="center">
                                         <Image style={{
                                             display: "block",
                                             margin: "auto auto",
+                                            cursor: "pointer"
                                         }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selected.PkMn}.png`} width="200" height="200" />
                                         {selected.Identifier}<br />
                                         ({this.pokeEvolution(selected.EvoStage)})
-                                </Grid.Column>
+                                    </Grid.Column>
                                     <Grid.Column textAlign="center">
                                         {!_.isNil(next) && (
                                             <div onClick={() => handleDimmerOpen(next['PkMn'])}>
                                                 <Image style={{
                                                     display: "block",
                                                     margin: "auto auto",
+                                                    cursor: "pointer"
                                                 }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${next.PkMn}.png`} width="150" height="150" />
                                                 {next.Identifier}<br />({this.pokeEvolution(next.EvoStage)})
                                         </div>
